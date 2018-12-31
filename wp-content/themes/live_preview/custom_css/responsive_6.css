@@ -1,0 +1,17 @@
+@media screen and (max-width:1169px)
+{
+.header,
+.footer,
+.footer_container .main
+{
+	width: 940px;
+}
+.theme_page_header
+{
+	width: 880px;
+}
+.theme_page
+{
+	width:910px;
+}
+}
