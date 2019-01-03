@@ -17,33 +17,42 @@ get_header();
 	    <div class="m-container">
 	        <div class="m-form">
 	            <div class="form-head text-center">
-	              <img style="width:62px" class="img-responsive" src="<?php echo wp_get_attachment_url(get_theme_mod('form-icon')) ?>"/>
-	              	<h4><span>Ride</span> with Metro Cabs</h4>
+	              	<h1>Lorem Ipsum <br> is simply<br> dummy <br> text</h1>
 	             </div>
 	            <div class="s-form">
-                
-	              <form method="post" action="<?php echo get_site_url()."/booking";?>">
-							<label style="" class="full-field full-border" type="text" name="fname">
-							<input type="text" name="fname" value="" size="40" aria-required="true" aria-invalid="false" placeholder="Name" />
-							</label>
-							<label style=""  class="full-field full-border" type="text" name="date">
-							<input type="text" name="date" value="" size="40" aria-required="true" aria-invalid="false" placeholder="Date" />
-							</label>
-							<label style=""  class="full-field full-border" type="text" name="time">
-							<input type="text" name="time" value="" size="40" aria-required="true" aria-invalid="false"	placeholder="Time" />
-							</label>
-							<label style=""  class="full-field full-border" type="text" name="phone">
-							<input type="text" name="phone" value="" size="40" aria-required="true" aria-invalid="false" placeholder="Phone Number" />
-							</label>
-							<input type="submit" value="BOOK THE CAB" />
-							<p class="bot">or need a custom travel plan? <br /><a href="#contact-us">Contact us</a></p>
-	              </form>
+									<input type="submit" value="BOOK THE CAB" />
+
 	            </div>
 	        </div>
+					<!-- <div class="m-form">
+						 <div class="form-head text-center">
+							 <img style="width:62px" class="img-responsive" src="<?php echo wp_get_attachment_url(get_theme_mod('form-icon')) ?>"/>
+								 <h4><span>Ride</span> with Metro Cabs</h4>
+							</div>
+						 <div class="s-form">
+
+							 <form method="post" action="<?php echo get_site_url()."/booking";?>">
+						 <label style="" class="full-field full-border" type="text" name="fname">
+						 <input type="text" name="fname" value="" size="40" aria-required="true" aria-invalid="false" placeholder="Name" />
+						 </label>
+						 <label style=""  class="full-field full-border" type="text" name="date">
+						 <input type="text" name="date" value="" size="40" aria-required="true" aria-invalid="false" placeholder="Date" />
+						 </label>
+						 <label style=""  class="full-field full-border" type="text" name="time">
+						 <input type="text" name="time" value="" size="40" aria-required="true" aria-invalid="false"	placeholder="Time" />
+						 </label>
+						 <label style=""  class="full-field full-border" type="text" name="phone">
+						 <input type="text" name="phone" value="" size="40" aria-required="true" aria-invalid="false" placeholder="Phone Number" />
+						 </label>
+						 <input type="submit" value="BOOK THE CAB" />
+						 <p class="bot">or need a custom travel plan? <br /><a href="#contact-us">Contact us</a></p>
+							 </form>
+						 </div>
+				 </div> -->
 	    </div>
 	</div>
 	<div class="clients">
-	    <div class="m-container">
+	    <!-- <div class="m-container"> -->
 	        <div class="client-list">
 	            <h1>Our <span>happy</span> corporate clientele</h1>
 							<section class="multiple-items">
@@ -58,9 +67,9 @@ get_header();
 											<?php endwhile; ?>
 							</section>
 	        </div>
-	    </div>
+	    <!-- </div> -->
 	</div>
- 
+
 	<div class="why-us" id="why-us">
 	  <div class="m-container">
 	      <h1 class="why-us-head">Why <span>choose us</span></h1>
