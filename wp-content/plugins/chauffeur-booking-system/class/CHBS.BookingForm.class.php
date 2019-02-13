@@ -2898,7 +2898,8 @@ class CHBSBookingForm
             'booking_form'                                                      =>  $data['booking_form']
         );
         
-        $price=$Vehicle->calculatePrice($argument);
+        $price=$Vehicle->calculatePrice($argument,true,$data['vehicle']['meta']['passenger_count']);
+
         
         /***/
         
@@ -2907,7 +2908,7 @@ class CHBSBookingForm
         if($Validation->isNotEmpty($data['vehicle']['post']->post_content))
             $htmlDescription='<p>'.$data['vehicle']['post']->post_content.'</p>';
 
-        if((array_key_exists('attribute',$data['vehicle'])) && (is_array($data['vehicle']['attribute'])))
+     /*   if((array_key_exists('attribute',$data['vehicle'])) && (is_array($data['vehicle']['attribute'])))
         {
             $i=0;
             $htmlAttribute=array(null,null);
@@ -2938,8 +2939,22 @@ class CHBSBookingForm
                 </div>
             ';
         }
-        
-        if($Validation->isNotEmpty($htmlDescription))
+        */
+      /*== Adding Price description ===*/ 
+      $htmlPriceDescription = '';
+          
+      if(isset($data['vehicle']['meta']['price_first_4_delivery_value']) && (($data['vehicle']['meta']['price_first_4_delivery_value']) > 0)) {
+          $htmlPriceDescription .=
+              '<div class="chbs-vehicle-price-details"> '.
+              '<label>'.__('Price for first 4hrs/40KM ','chauffeur-booking-system').$data['vehicle']['meta']['price_first_4_delivery_value'].'</label>'.'</div>'
+               ;
+      }
+     
+          
+      $htmlDescription .= '<div class="chbs-vehicle-price-description">'.$htmlPriceDescription.'</div>';
+
+
+      if($Validation->isNotEmpty($htmlDescription))
             $htmlDescription='<div class="chbs-vehicle-content-description"><div>'.$htmlDescription.'</div></div>';
 
         /****/

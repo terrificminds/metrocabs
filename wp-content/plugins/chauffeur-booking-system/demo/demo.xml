@@ -1437,7 +1437,7 @@
 		<wp:postmeta>
 			<wp:meta_key><![CDATA[chbs_bag_count]]></wp:meta_key>
 			<wp:meta_value><![CDATA[4]]></wp:meta_value>
-		</wp:postmeta>
+		</wp:postmeta>		
 		<wp:postmeta>
 			<wp:meta_key><![CDATA[chbs_attribute]]></wp:meta_key>
 			<wp:meta_value><![CDATA[a:8:{i:10080;s:4:"2200";i:10081;a:1:{i:0;i:2;}i:10067;s:3:"190";i:10068;a:1:{i:0;i:1;}i:10069;a:1:{i:0;i:2;}i:10070;a:1:{i:0;i:1;}i:10071;a:1:{i:0;i:2;}i:10072;a:3:{i:0;i:2;i:1;i:4;i:2;i:8;}}]]></wp:meta_value>

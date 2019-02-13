@@ -172,7 +172,18 @@ class CHBSVehicle
            $option['price_delivery_value']=0.00;
         if(!$TaxRate->isTaxRate($option['price_delivery_tax_rate_id']))
             $option['price_delivery_tax_rate_id']=0;        
-        
+
+                  
+        if(!$Validation->isPrice($option['price_first_4_delivery_value'],false))
+        $option['price_first_4_delivery_value']=0.00;
+        if(!$TaxRate->isTaxRate($option['price_first_4_tax_rate_id']))
+            $option['price_first_4_tax_rate_id']=0;  
+
+        if(!$Validation->isPrice($option['price_extra_km_value'],false))
+            $option['price_first_4_delivery_value']=0.00;
+        if(!$TaxRate->isTaxRate($option['price_extra_km_tax_rate_id']))
+            $option['price_first_4_tax_rate_id']=0;  
+
         if(!$Validation->isPrice($option['price_delivery_return_value'],false))
            $option['price_delivery_return_value']=0.00;
         if(!$TaxRate->isTaxRate($option['price_delivery_return_tax_rate_id']))
@@ -301,6 +312,10 @@ class CHBSVehicle
             'price_initial_tax_rate_id',
             'price_delivery_value',
             'price_delivery_tax_rate_id',
+            'price_first_4_delivery_value',
+            'price_first_4_tax_rate_id',
+            'price_extra_km_value',
+            'price_extra_km_tax_rate_id',
             'price_delivery_return_value',
             'price_delivery_return_tax_rate_id',
             'price_distance_value',
@@ -351,6 +366,12 @@ class CHBSVehicle
         CHBSHelper::setDefault($meta,'price_delivery_value','0.00');
         CHBSHelper::setDefault($meta,'price_delivery_tax_rate_id',$TaxRate->getDefaultTaxPostId());        
         
+        CHBSHelper::setDefault($meta,'price_first_4_delivery_value','0.00');
+        CHBSHelper::setDefault($meta,'price_first_4_tax_rate_id',$TaxRate->getDefaultTaxPostId());        
+        
+        CHBSHelper::setDefault($meta,'price_extra_km_value','0.00');
+        CHBSHelper::setDefault($meta,'price_extra_km_tax_rate_id',$TaxRate->getDefaultTaxPostId());   
+
         CHBSHelper::setDefault($meta,'price_delivery_return_value','0.00');
         CHBSHelper::setDefault($meta,'price_delivery_return_tax_rate_id',$TaxRate->getDefaultTaxPostId());  
         
@@ -469,7 +490,7 @@ class CHBSVehicle
     
     /**************************************************************************/
     
-    function calculatePrice($data,$calculateHiddenFee=true)
+    function calculatePrice($data,$calculateHiddenFee=true,$passengers=0)
     {
         $Length=new CHBSLength();
         $TaxRate=new CHBSTaxRate();
@@ -520,6 +541,10 @@ class CHBSVehicle
             'price_delivery_return_tax_rate_id'                                 =>  0,
             'price_distance_value'                                              =>  0.00,
             'price_distance_tax_rate_id'                                        =>  0,
+            'price_first_4_delivery_value'                                      =>  0.00,
+            'price_first_4_tax_rate_id'                                         =>  0,
+            'price_extra_km_value'                                              =>  0.00,
+            'price_extra_km_tax_rate_id'                                        =>  0,
             'price_distance_return_value'                                       =>  0.00,
             'price_distance_return_tax_rate_id'                                 =>  0,
             'price_hour_value'                                                  =>  0.00,
@@ -534,6 +559,7 @@ class CHBSVehicle
 
         if($rule===false) 
         {
+           
             $priceSet=false;
             
             if((int)$data['service_type_id']==3)
@@ -613,6 +639,7 @@ class CHBSVehicle
         
         if((int)$priceBase['price_type']===2)
         {
+            
             $priceSumNetValue=$priceBase['price_fixed_value'];
             $priceSumGrossValue=number_format($priceSumNetValue*(1+$TaxRate->getTaxRateValue($priceBase['price_fixed_tax_rate_id'],$taxRate)/100),2,'.',''); 
             
@@ -645,7 +672,47 @@ class CHBSVehicle
             {
                 if(in_array($data['service_type_id'],array(1,3)))
                 {
-                    $priceSumNetValue=$priceBase['price_distance_value']*$distance;
+                    //check it is 5 seater or 7 seater
+                                        
+                        //If the first 40KM/4Hrs price  
+                        if(isset($priceBase['price_first_4_delivery_value']) && ($priceBase['price_first_4_delivery_value'] > 0)) {
+                            $price_for_km = 0;
+                            $fixed_4_delivery = $priceBase['price_first_4_delivery_value'];
+                            $additionalPrice  = $priceBase['price_extra_km_value'];         
+
+                            if($distance <= 40) {
+                                if($fixed_4_delivery > 0) {
+                                    $price_for_km     = $fixed_4_delivery;                  
+                                }
+                            } else {
+                                // Add additional price 
+                                $tempDistance      = $distance - 40;                        
+                                $additional        = $tempDistance * $additionalPrice;
+                                $price_for_km      = $fixed_4_delivery + $additional;       
+                            }
+
+                            //If duration is greater than 4hr, then calculate the Hourly rate
+                            if( $duration <= 4) {
+                                $price_for_hr = $fixed_4_delivery;
+                            } else {
+                                $additionalHr =  $duration - 4;
+                                $additionalPriceHr  = $additionalHr * $priceBase['price_extra_time_value']; 
+                                $price_for_hr = $fixed_4_delivery + $additionalPriceHr;
+                            }     
+                            
+                            //Compare the KM rate and the hourly rate
+
+                            if( $price_for_km > $price_for_hr ){
+                                $priceSumNetValue = $price_for_km;
+                            } else {
+                                $priceSumNetValue = $price_for_hr;
+                            }
+
+
+                        } else {
+                            $priceSumNetValue=$priceBase['price_distance_value']*$distance;
+                        }
+                                     
                     $priceSumGrossValue=number_format($priceSumNetValue*(1+$TaxRate->getTaxRateValue($priceBase['price_distance_tax_rate_id'],$taxRate)/100),2,'.','');                   
                 }
                 elseif((int)$data['service_type_id']===2)
@@ -728,7 +795,8 @@ class CHBSVehicle
     }
     
     /**************************************************************************/
-    
+
+  
     function getPrice($name,$vehicle,$serviceTypeId,$routeId)
     {
         $vehicleId=$vehicle['post']->ID;

@@ -751,8 +751,10 @@ class CHBSBooking
         
         /***/
         
-        $component=array('initial','delivery','delivery_return','vehicle','extra_time','booking_extra','total','pay');
+      //  $component=array('initial','delivery','delivery_return','vehicle','extra_time','booking_extra','total','pay');
         
+      $component=array('initial','delivery','first_4_delivery','price_extra_km','delivery_return','vehicle','extra_time','booking_extra','total','pay');
+      
         foreach($component as $value)
         {
             $price[$value]=array
@@ -800,11 +802,12 @@ class CHBSBooking
                 'booking_form'                                                  =>  $data['booking_form']
             );
 
-            if(is_null($vehiclePrice))
+            if(is_null($vehiclePrice)){
                 $vehiclePrice=$Vehicle->calculatePrice($argument,false);
-  
+            }
+                
             if(CHBSOption::getOption('length_unit')==2)
-            {
+            {   
                 $data['distance_map']=$Length->convertUnit($data['distance_map']);
                 $data['base_location_distance']=$Length->convertUnit($data['base_location_distance']);
             }
@@ -812,40 +815,49 @@ class CHBSBooking
             $price['vehicle']['sum']['gross']['value']=$vehiclePrice['price']['sum']['gross']['value'];        
             
             $price['initial']['sum']['gross']['value']=CHBSPrice::calculateGross($vehiclePrice['price']['base']['price_initial_value'],$vehiclePrice['price']['base']['price_initial_tax_rate_id']);
+
             if(in_array($serviceTypeId,array(1,3)))
             {
                 if(in_array($serviceTypeId,$data['booking_form']['meta']['transfer_type_enable']))
                 {
                     if((int)$data['transfer_type_service_type_'.$serviceTypeId]===3)
                     {
+                        
                         $price['initial']['sum']['gross']['value']*=2;
                         $data['base_location_distance']*=2;
                     }
                 }
             }
-            
-            $price['delivery']['sum']['gross']['value']=CHBSPrice::calculateGross($vehiclePrice['price']['base']['price_delivery_value']*$data['base_location_distance'],$vehiclePrice['price']['base']['price_delivery_tax_rate_id']);
-            $price['delivery_return']['sum']['gross']['value']=CHBSPrice::calculateGross($vehiclePrice['price']['base']['price_delivery_return_value']*$data['base_location_return_distance'],$vehiclePrice['price']['base']['price_delivery_return_tax_rate_id']);
-            
+           
+            $price['delivery']['sum']['gross']['value']=CHBSPrice::calculateGross($vehiclePrice['price']['base']['price_delivery_value']*$data['base_location_distance'],$vehiclePrice['price']['base']['price_delivery_tax_rate_id']);          
+           
+            $price['delivery_return']['sum']['gross']['value']=CHBSPrice::calculateGross($vehiclePrice['price']['base']['price_delivery_return_value']*$data['base_location_return_distance'],$vehiclePrice['price']['base']['price_delivery_return_tax_rate_id']);                    
+
             if(in_array($serviceTypeId,array(1,3)))
+              
                 $price['extra_time']['sum']['gross']['value']=CHBSPrice::calculateGross($vehiclePrice['price']['base']['price_extra_time_value']*$data['extra_time_service_type_'.$data['service_type_id']],$vehiclePrice['price']['base']['price_extra_time_tax_rate_id']);
-                        
+
+                
             if((int)$vehiclePrice['price']['base']['price_type']===2)
             {
+               
                 $price['initial']['sum']['gross']['value']=0.00; 
                 $price['delivery']['sum']['gross']['value']=0.00;
                 $price['delivery_return']['sum']['gross']['value']=0.00;   
             }
             
             $price['initial']['sum']['gross']['format']=CHBSPrice::format($price['initial']['sum']['gross']['value'],CHBSOption::getOption('currency'));
+            
             $price['delivery']['sum']['gross']['format']=CHBSPrice::format($price['delivery']['sum']['gross']['value'],CHBSOption::getOption('currency'));
+
             $price['delivery_return']['sum']['gross']['format']=CHBSPrice::format($price['delivery_return']['sum']['gross']['value'],CHBSOption::getOption('currency'));
             
             if($hideFee)
             {
                 $price['vehicle']['sum']['gross']['value']+=$price['initial']['sum']['gross']['value']+$price['delivery']['sum']['gross']['value']+$price['delivery_return']['sum']['gross']['value'];
             }
-            
+
+
             $price['vehicle']['sum']['gross']['format']=CHBSPrice::format($price['vehicle']['sum']['gross']['value'],CHBSOption::getOption('currency'));
             
             if(in_array($serviceTypeId,array(1,3)))

@@ -150,7 +150,7 @@
                                             </div>
                                         </td>                                        
                                     </tr>
-                                    <tr<?php echo CHBSHelper::createCSSClassAttribute($class[2]); ?>>
+                                    <tr <?php echo CHBSHelper::createCSSClassAttribute($class[2]); ?>>
                                         <td>
                                             <div class="to-clear-fix">
                                                 <?php esc_html_e('Fixed (return)','chauffeur-booking-system'); ?>
@@ -255,6 +255,82 @@
                                             </div>
                                         </td>                                        
                                     </tr>   
+
+
+
+                                    <tr<?php echo CHBSHelper::createCSSClassAttribute($class[1]); ?>>
+                                        <td>
+                                            <div class="to-clear-fix">
+                                                <?php esc_html_e('Price for 4hr/40KM','chauffeur-booking-system'); ?>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="to-clear-fix">
+                                                <?php esc_html_e('Variable','chauffeur-booking-system'); ?>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="to-clear-fix">
+                                                <?php _e('Price for first 4hr/40KM of ride from base to customer pickup location.','chauffeur-booking-system'); ?>
+                                            </div>
+                                        </td>                                        
+                                        <td>
+                                            <div class="to-clear-fix">
+                                                <input maxlength="12" type="text" name="<?php CHBSHelper::getFormName('price_first_4_delivery_value'); ?>" id="<?php CHBSHelper::getFormName('price_first_4_delivery_value'); ?>" value="<?php echo esc_attr($this->data['meta']['price_first_4_delivery_value']); ?>"/>
+                                            </div>
+                                        </td>                                        
+                                        <td>
+                                            <div class="to-clear-fix">
+                                                <select name="<?php CHBSHelper::getFormName('price_delivery_tax_rate_id'); ?>">
+<?php
+                echo '<option value="0" '.(CHBSHelper::selectedIf($this->data['meta']['price_delivery_tax_rate_id'],0,false)).'>'.esc_html__('- Not set -','chauffeur-booking-system').'</option>';
+                foreach($this->data['dictionary']['tax_rate'] as $index=>$value)
+                {
+                    echo '<option value="'.esc_attr($index).'" '.(CHBSHelper::selectedIf($this->data['meta']['price_delivery_tax_rate_id'],$index,false)).'>'.esc_html($value['post']->post_title).'</option>';
+                }
+?>
+                                                </select>                                                  
+                                            </div>
+                                        </td>                                        
+                                    </tr> 
+                                    <tr<?php echo CHBSHelper::createCSSClassAttribute($class[1]); ?>>
+                                        <td>
+                                            <div class="to-clear-fix">
+                                                <?php esc_html_e('Price per KM (extra)','chauffeur-booking-system'); ?>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="to-clear-fix">
+                                                <?php esc_html_e('Variable','chauffeur-booking-system'); ?>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="to-clear-fix">
+                                                <?php _e('Price per extra KM','chauffeur-booking-system'); ?>
+                                            </div>
+                                        </td>                                        
+                                        <td>
+                                            <div class="to-clear-fix">
+                                                <input maxlength="12" type="text" name="<?php CHBSHelper::getFormName('price_extra_km_value'); ?>" id="<?php CHBSHelper::getFormName('price_extra_km_value'); ?>" value="<?php echo esc_attr($this->data['meta']['price_extra_km_value']); ?>"/>
+                                            </div>
+                                        </td>                                        
+                                        <td>
+                                            <div class="to-clear-fix">
+                                                <select name="<?php CHBSHelper::getFormName('price_extra_km_tax_rate_id'); ?>">
+<?php
+                echo '<option value="0" '.(CHBSHelper::selectedIf($this->data['meta']['price_extra_km_tax_rate_id'],0,false)).'>'.esc_html__('- Not set -','chauffeur-booking-system').'</option>';
+                foreach($this->data['dictionary']['tax_rate'] as $index=>$value)
+                {
+                    echo '<option value="'.esc_attr($index).'" '.(CHBSHelper::selectedIf($this->data['meta']['price_extra_km_tax_rate_id'],$index,false)).'>'.esc_html($value['post']->post_title).'</option>';
+                }
+?>
+                                                </select>                                                  
+                                            </div>
+                                        </td>                                        
+                                    </tr> 
+
+
+
                                     <tr<?php echo CHBSHelper::createCSSClassAttribute($class[1]); ?>>
                                         <td>
                                             <div class="to-clear-fix">
