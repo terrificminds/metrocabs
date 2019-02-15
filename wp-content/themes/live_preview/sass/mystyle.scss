@@ -178,12 +178,12 @@ z-index: 1000 !important;
       {
         height: 450px;
       }
-  .banner_img{
+  img{
     object-fit: cover;
     background-repeat: no-repeat;
     width: 100%;
     height: 360px;
-    position: absolute;
+    // position: absolute;
     object-position: top;
     @media all and (max-width:991px)
       {
