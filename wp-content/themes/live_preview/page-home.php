@@ -13,8 +13,27 @@ get_header();
 </div> -->
 <div class="content">
 	<div class="service">
-	  <img class="banner_img" class="img-responsive" src="<?php echo wp_get_attachment_url(get_theme_mod('service-banner-img')) ?>"/>
-	    <div class="m-container">
+
+	<div class="banner-slider">
+		<section class="single-item">
+			<?php
+				$carousel = new WP_Query(array(
+					'post_type' => 'banner-slider',
+				));
+				while($carousel -> have_posts()): $carousel -> the_post(); ?>
+					<div>
+					    <a href="<?php echo(types_render_field("bannerurl",array('row' => true))); ?>">
+							<?php echo(types_render_field("bannerimage",array('row' => true))); ?>
+							
+						</a>
+						
+					</div>
+				<?php endwhile; ?>
+		</section>
+	</div>
+	
+	  <!-- <img class="banner_img" class="img-responsive" src="<?php echo wp_get_attachment_url(get_theme_mod('service-banner-img')) ?>"/> -->
+	    <!-- <div class="m-container">
 	        <div class="m-form">
 	            <div class="form-head text-center">
 	              	<h1>Lorem Ipsum <br> is simply<br> dummy <br> text</h1>
@@ -23,7 +42,7 @@ get_header();
 									<input type="submit" value="BOOK THE CAB" />
 
 	            </div>
-	        </div>
+	        </div> -->
 					<!-- <div class="m-form">
 						 <div class="form-head text-center">
 							 <img style="width:62px" class="img-responsive" src="<?php echo wp_get_attachment_url(get_theme_mod('form-icon')) ?>"/>
@@ -49,6 +68,7 @@ get_header();
 							 </form>
 						 </div>
 				 </div> -->
+				
 	    </div>
 	</div>
 	<div class="clients">

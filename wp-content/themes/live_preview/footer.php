@@ -182,6 +182,19 @@
 					});
 </script>
 <script>
+	$(document).on('ready', function() {
+		$('.single-item').slick(
+			{				slidesToShow: 1,
+						dots: true,
+						infinite: true,
+						speed: 300,
+						autoplay: true,
+						autoplaySpeed:6000,
+			}
+		);
+	});
+</script>
+<script>
 window.onscroll = function() {myFunction()};
 
 var header = document.getElementById("myHeader");
