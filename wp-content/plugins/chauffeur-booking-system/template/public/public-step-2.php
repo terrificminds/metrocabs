@@ -1,4 +1,3 @@
-        
         <div class="chbs-layout-25x75 chbs-clear-fix">
 
             <div class="chbs-layout-column-left"></div>

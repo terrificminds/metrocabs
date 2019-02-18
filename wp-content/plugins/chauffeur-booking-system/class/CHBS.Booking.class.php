@@ -117,7 +117,8 @@ class CHBSBooking
     
     function getBooking($bookingId)
     {
-		$post=get_post($bookingId);
+        $post=get_post($bookingId);
+       
 		if(is_null($post)) return(false);
         
         $booking=array();
@@ -345,7 +346,7 @@ class CHBSBooking
         );        
         
         $vehiclePrice=$Vehicle->calculatePrice($argument);
-               
+            
         CHBSPostMeta::updatePostMeta($bookingId,'vehicle_id',$data['vehicle_id']);
         CHBSPostMeta::updatePostMeta($bookingId,'vehicle_name',$vehicle['post']->post_title);
         
@@ -363,7 +364,11 @@ class CHBSBooking
             'price_delivery_return_value'                                       =>  $vehiclePrice['price']['base']['price_delivery_return_value'],    
             'price_delivery_return_tax_rate_value'                              =>  $TaxRate->getTaxRateValue($vehiclePrice['price']['base']['price_delivery_return_tax_rate_id'],$taxRateDictionary),
             'price_distance_value'                                              =>  $vehiclePrice['price']['base']['price_distance_value'],
-            'price_distance_tax_rate_value'                                     =>  $TaxRate->getTaxRateValue($vehiclePrice['price']['base']['price_distance_tax_rate_id'],$taxRateDictionary),
+            'price_distance_tax_rate_value'                                     =>  $TaxRate->getTaxRateValue($vehiclePrice['price']['base']['price_distance_tax_rate_id'],$taxRateDictionary),     
+            'price_first_4_delivery_value'                                      =>  $vehiclePrice['price']['base']['price_first_4_delivery_value'],
+            'price_first_4_tax_rate_value'                                      =>  $TaxRate->getTaxRateValue($vehiclePrice['price']['base']['price_first_4_tax_rate_id'],$taxRateDictionary),
+            'price_extra_km_value'                                              =>  $vehiclePrice['price']['base']['price_extra_km_value'],
+            'price_extra_km_tax_rate_value'                                     =>  $TaxRate->getTaxRateValue($vehiclePrice['price']['base']['price_extra_km_tax_rate_id'],$taxRateDictionary),
             'price_distance_return_value'                                       =>  $vehiclePrice['price']['base']['price_distance_return_value'],
             'price_distance_return_tax_rate_value'                              =>  $TaxRate->getTaxRateValue($vehiclePrice['price']['base']['price_distance_return_tax_rate_id'],$taxRateDictionary),
             'price_hour_value'                                                  =>  $vehiclePrice['price']['base']['price_hour_value'],
@@ -375,7 +380,8 @@ class CHBSBooking
             'price_passenger_children_value'                                    =>  $vehiclePrice['price']['base']['price_passenger_children_value'],
             'price_passenger_children_tax_rate_value'                           =>  $TaxRate->getTaxRateValue($vehiclePrice['price']['base']['price_passenger_children_tax_rate_id'],$taxRateDictionary)
         );     
-             
+        
+        
         foreach($vehiclePriceBooking as $index=>$value)
             CHBSPostMeta::updatePostMeta($bookingId,$index,$value);
         
@@ -442,6 +448,7 @@ class CHBSBooking
         
         /***/
         
+
         if($WooCommerce->isEnable($bookingForm['meta']))
             $WooCommerce->sendBooking($bookingId,$data);
         
@@ -572,6 +579,7 @@ class CHBSBooking
     
     /**************************************************************************/
     
+    /*** not using  */
     function managePostsCustomColumn($column)
     {
 		global $post;
@@ -583,7 +591,8 @@ class CHBSBooking
 		$meta=CHBSPostMeta::getPostMeta($post);
         
         $billing=$this->createBilling($post->ID);
-		        
+                
+        
 		switch($column) 
 		{
 			case 'status':
@@ -741,7 +750,9 @@ class CHBSBooking
     /**************************************************************************/
     
     function calculatePrice($data,$vehiclePrice=null,$hideFee=false)
-    {        
+    {       
+        
+        
         $Length=new CHBSLength();
         $TaxRate=new CHBSTaxRate();
         $Vehicle=new CHBSVehicle();
@@ -751,8 +762,10 @@ class CHBSBooking
         
         /***/
         
-        $component=array('initial','delivery','delivery_return','vehicle','extra_time','booking_extra','total','pay');
+      //  $component=array('initial','delivery','delivery_return','vehicle','extra_time','booking_extra','total','pay');
         
+      $component=array('initial','delivery','first_4_delivery','price_extra_km','delivery_return','vehicle','extra_time','booking_extra','total','pay');
+      
         foreach($component as $value)
         {
             $price[$value]=array
@@ -800,11 +813,12 @@ class CHBSBooking
                 'booking_form'                                                  =>  $data['booking_form']
             );
 
-            if(is_null($vehiclePrice))
+            if(is_null($vehiclePrice)){
                 $vehiclePrice=$Vehicle->calculatePrice($argument,false);
-  
+            }
+                
             if(CHBSOption::getOption('length_unit')==2)
-            {
+            {   
                 $data['distance_map']=$Length->convertUnit($data['distance_map']);
                 $data['base_location_distance']=$Length->convertUnit($data['base_location_distance']);
             }
@@ -812,40 +826,49 @@ class CHBSBooking
             $price['vehicle']['sum']['gross']['value']=$vehiclePrice['price']['sum']['gross']['value'];        
             
             $price['initial']['sum']['gross']['value']=CHBSPrice::calculateGross($vehiclePrice['price']['base']['price_initial_value'],$vehiclePrice['price']['base']['price_initial_tax_rate_id']);
+
             if(in_array($serviceTypeId,array(1,3)))
             {
                 if(in_array($serviceTypeId,$data['booking_form']['meta']['transfer_type_enable']))
                 {
                     if((int)$data['transfer_type_service_type_'.$serviceTypeId]===3)
                     {
+                        
                         $price['initial']['sum']['gross']['value']*=2;
                         $data['base_location_distance']*=2;
                     }
                 }
             }
-            
-            $price['delivery']['sum']['gross']['value']=CHBSPrice::calculateGross($vehiclePrice['price']['base']['price_delivery_value']*$data['base_location_distance'],$vehiclePrice['price']['base']['price_delivery_tax_rate_id']);
-            $price['delivery_return']['sum']['gross']['value']=CHBSPrice::calculateGross($vehiclePrice['price']['base']['price_delivery_return_value']*$data['base_location_return_distance'],$vehiclePrice['price']['base']['price_delivery_return_tax_rate_id']);
-            
+           
+            $price['delivery']['sum']['gross']['value']=CHBSPrice::calculateGross($vehiclePrice['price']['base']['price_delivery_value']*$data['base_location_distance'],$vehiclePrice['price']['base']['price_delivery_tax_rate_id']);          
+           
+            $price['delivery_return']['sum']['gross']['value']=CHBSPrice::calculateGross($vehiclePrice['price']['base']['price_delivery_return_value']*$data['base_location_return_distance'],$vehiclePrice['price']['base']['price_delivery_return_tax_rate_id']);                    
+
             if(in_array($serviceTypeId,array(1,3)))
+              
                 $price['extra_time']['sum']['gross']['value']=CHBSPrice::calculateGross($vehiclePrice['price']['base']['price_extra_time_value']*$data['extra_time_service_type_'.$data['service_type_id']],$vehiclePrice['price']['base']['price_extra_time_tax_rate_id']);
-                        
+
+                
             if((int)$vehiclePrice['price']['base']['price_type']===2)
             {
+               
                 $price['initial']['sum']['gross']['value']=0.00; 
                 $price['delivery']['sum']['gross']['value']=0.00;
                 $price['delivery_return']['sum']['gross']['value']=0.00;   
             }
             
             $price['initial']['sum']['gross']['format']=CHBSPrice::format($price['initial']['sum']['gross']['value'],CHBSOption::getOption('currency'));
+            
             $price['delivery']['sum']['gross']['format']=CHBSPrice::format($price['delivery']['sum']['gross']['value'],CHBSOption::getOption('currency'));
+
             $price['delivery_return']['sum']['gross']['format']=CHBSPrice::format($price['delivery_return']['sum']['gross']['value'],CHBSOption::getOption('currency'));
             
             if($hideFee)
             {
                 $price['vehicle']['sum']['gross']['value']+=$price['initial']['sum']['gross']['value']+$price['delivery']['sum']['gross']['value']+$price['delivery_return']['sum']['gross']['value'];
             }
-            
+
+
             $price['vehicle']['sum']['gross']['format']=CHBSPrice::format($price['vehicle']['sum']['gross']['value'],CHBSOption::getOption('currency'));
             
             if(in_array($serviceTypeId,array(1,3)))
@@ -897,6 +920,9 @@ class CHBSBooking
     
     function createBilling($bookingId)
     {
+    
+
+
         $billing=array();
         
         if(($booking=$this->getBooking($bookingId))===false) return($billing);
@@ -952,8 +978,10 @@ class CHBSBooking
         
         if(($booking['meta']['price_delivery_value']>0) && ($booking['meta']['base_location_distance']>0))
         {
+
             $baseLocationDistance=$booking['meta']['base_location_distance'];
 
+                       
             if($booking['meta']['length_unit']==2)
                 $booking['meta']['base_location_distance']=$Length->convertUnit($booking['meta']['base_location_distance'],1,2);
 
@@ -1082,10 +1110,58 @@ class CHBSBooking
             {
                 if(in_array($booking['meta']['service_type_id'],array(1,3)))
                 {
-                    $priceNet=$booking['meta']['price_distance_value'];
-                    $taxValue=$booking['meta']['price_distance_tax_rate_value'];
+                    
+                    //Setting the custom price
+                    if(isset($booking['meta']['price_first_4_delivery_value']) && ($booking['meta']['price_first_4_delivery_value'] > 0))
+                    {
+                        $price_for_km = 0;
+                        $priceNet = 1;
 
-                    $valueNet=$priceNet*$distance; 
+                        //$taxValue=$booking['meta']['price_distance_tax_rate_value'];
+
+                        $fixed_4_delivery = $booking['meta']['price_first_4_delivery_value'];
+                        $additionalPrice  = $booking['meta']['price_extra_km_value'];         
+                        $duration = ($booking['meta']['duration']/60);
+                        $distance = $booking['meta']['distance'];
+
+                        if($distance <= 40) {
+                            if($fixed_4_delivery > 0) {
+                                $price_for_km     = $fixed_4_delivery;                  
+                            }
+                        } else {
+                            // Add additional price 
+                            $tempDistance      = $distance - 40;                        
+                            $additional        = $tempDistance * $additionalPrice;
+                            $price_for_km      = $fixed_4_delivery + $additional;       
+                        }
+
+                        //If duration is greater than 4hr, then calculate the Hourly rate
+                        if( $duration <= 4) {
+                            $price_for_hr = $fixed_4_delivery;
+                        } else {
+                            $additionalHr =  $duration - 4;
+                            $additionalPriceHr  = $additionalHr * $booking['meta']['price_extra_time_value']; 
+                            $price_for_hr = $fixed_4_delivery + $additionalPriceHr;
+                        }     
+                        
+                        //Compare the KM rate and the hourly rate
+
+                        if( $price_for_km > $price_for_hr ){
+                            $valueNet = $price_for_km;
+                        } else {
+                            $valueNet = $price_for_hr;
+                        }
+                        
+                        
+                    } else {
+                        $priceNet=$booking['meta']['price_distance_value'];
+                        $taxValue=$booking['meta']['price_distance_tax_rate_value'];
+
+
+                        $valueNet=$priceNet*$distance; 
+                    }
+
+                   
                 }
                 else
                 {

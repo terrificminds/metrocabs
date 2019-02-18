@@ -55,7 +55,7 @@
 					$('.multiple-items').slick({
 					dots: false,
 					infinite: true,
-					slidesToShow: 5,
+					slidesToShow: 9,
 					slidesToScroll: 1,
 					autoplay: true,
 					autoplaySpeed:1000,
@@ -68,7 +68,7 @@
 								arrows: false,
 								centerMode: true,
 								centerPadding: '40px',
-								slidesToShow: 5
+								slidesToShow: 7
 							}
 						},
 						{
@@ -76,19 +76,19 @@
 							settings: {
 								arrows: false,
 								centerMode: true,
-								centerPadding: '40px',
+								centerPadding: '20px',
 								slidesToShow: 3
 							}
-						},
-						{
-							breakpoint: 400,
-							settings: {
-								arrows: false,
-								centerMode: true,
-								centerPadding: '40px',
-								slidesToShow: 2
-							}
 						}
+						// {
+						// 	breakpoint: 400,
+						// 	settings: {
+						// 		arrows: false,
+						// 		centerMode: true,
+						// 		centerPadding: '40px',
+						// 		slidesToShow: 3
+						// 	}
+						// }
 					]
 					});
 
@@ -180,6 +180,19 @@
 				]
 				});
 					});
+</script>
+<script>
+	$(document).on('ready', function() {
+		$('.single-item').slick(
+			{				slidesToShow: 1,
+						dots: true,
+						infinite: true,
+						speed: 300,
+						autoplay: true,
+						autoplaySpeed:6000,
+			}
+		);
+	});
 </script>
 <script>
 window.onscroll = function() {myFunction()};
