@@ -2880,6 +2880,7 @@ class CHBSBookingForm
             
         /***/
         
+       
         $argument=array
         (
             'booking_form_id'                                                   =>  $data['booking_form_id'],
@@ -3146,6 +3147,12 @@ class CHBSBookingForm
         {
             if(!(($value['meta']['passenger_count']>=$data['vehicle_passenger_count']) && ($value['meta']['bag_count']>=$data['vehicle_bag_count']))) continue;
             
+            if (isset($data['duration_sum'])) {
+                $totalDuration  = $data['duration_sum'];
+             } else {
+                $totalDuration  = $data['duration_service_type_'.$data['service_type_id']]*60;
+             }
+
             $argument=array
             (
                 'booking_form_id'                                               =>  $bookingForm['post']->ID,
@@ -3160,14 +3167,15 @@ class CHBSBookingForm
                 'distance'                                                      =>  $data['distance_map'],
                 'base_location_distance'                                        =>  $data['base_location_distance'],
                 'base_location_return_distance'                                 =>  $data['base_location_return_distance'],
-                'duration'                                                      =>  in_array($data['service_type_id'],array(1,3)) ? $data['duration_map'] : $data['duration_service_type_2']*60,
+                //'duration'                                                      =>  in_array($data['service_type_id'],array(1,3)) ? $data['duration_map'] : $data['duration_service_type_2']*60,
+                'duration'                                                      =>  $totalDuration,
                 'passenger_adult'                                               =>  $data['passenger_adult_service_type_'.$data['service_type_id']],
                 'passenger_children'                                            =>  $data['passenger_children_service_type_'.$data['service_type_id']],
                 'booking_form'                                                  =>  $bookingForm
             );
             
             $price=0;
-            
+        
             $vehicleHtml[$index]=$this->createVehicle($argument,$price);
             $vehiclePrice[$index]=$price;
         }

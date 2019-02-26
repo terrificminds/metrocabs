@@ -795,6 +795,13 @@ class CHBSBooking
         { 
             $serviceTypeId=$data['service_type_id'];
 
+            if (isset($data['duration_sum'])) {
+               $totalDuration  = $data['duration_sum'];
+            } else {
+               $totalDuration  = $data['duration_service_type_'.$serviceTypeId]*60;
+            }
+           
+
             $argument=array
             (
                 'booking_form_id'                                               =>  $data['booking_form_id'],
@@ -807,11 +814,12 @@ class CHBSBooking
                 'distance'                                                      =>  $data['distance_map'],
                 'base_location_distance'                                        =>  $data['base_location_distance'],
                 'base_location_distance_return'                                 =>  $data['base_location_distance_return'],
-                'duration'                                                      =>  $data['duration_service_type_'.$serviceTypeId]*60,
+                'duration'                                                      =>  $totalDuration,
                 'passenger_adult'                                               =>  $data['passenger_adult_service_type_'.$serviceTypeId],
                 'passenger_children'                                            =>  $data['passenger_children_service_type_'.$serviceTypeId],
                 'booking_form'                                                  =>  $data['booking_form']
             );
+          
 
             if(is_null($vehiclePrice)){
                 $vehiclePrice=$Vehicle->calculatePrice($argument,false);
@@ -844,9 +852,9 @@ class CHBSBooking
            
             $price['delivery_return']['sum']['gross']['value']=CHBSPrice::calculateGross($vehiclePrice['price']['base']['price_delivery_return_value']*$data['base_location_return_distance'],$vehiclePrice['price']['base']['price_delivery_return_tax_rate_id']);                    
 
-            if(in_array($serviceTypeId,array(1,3)))
+            // if(in_array($serviceTypeId,array(1,3)))
               
-                $price['extra_time']['sum']['gross']['value']=CHBSPrice::calculateGross($vehiclePrice['price']['base']['price_extra_time_value']*$data['extra_time_service_type_'.$data['service_type_id']],$vehiclePrice['price']['base']['price_extra_time_tax_rate_id']);
+            //     $price['extra_time']['sum']['gross']['value']=CHBSPrice::calculateGross($vehiclePrice['price']['base']['price_extra_time_value']*$data['extra_time_service_type_'.$data['service_type_id']],$vehiclePrice['price']['base']['price_extra_time_tax_rate_id']);
 
                 
             if((int)$vehiclePrice['price']['base']['price_type']===2)
@@ -871,8 +879,8 @@ class CHBSBooking
 
             $price['vehicle']['sum']['gross']['format']=CHBSPrice::format($price['vehicle']['sum']['gross']['value'],CHBSOption::getOption('currency'));
             
-            if(in_array($serviceTypeId,array(1,3)))
-                $price['extra_time']['sum']['gross']['format']=CHBSPrice::format($price['extra_time']['sum']['gross']['value'],CHBSOption::getOption('currency'));
+            // if(in_array($serviceTypeId,array(1,3)))
+            //     $price['extra_time']['sum']['gross']['format']=CHBSPrice::format($price['extra_time']['sum']['gross']['value'],CHBSOption::getOption('currency'));
         }
         
         /***/
@@ -1110,7 +1118,8 @@ class CHBSBooking
             {
                 if(in_array($booking['meta']['service_type_id'],array(1,3)))
                 {
-                    
+                 
+
                     //Setting the custom price
                     if(isset($booking['meta']['price_first_4_delivery_value']) && ($booking['meta']['price_first_4_delivery_value'] > 0))
                     {
@@ -1120,8 +1129,13 @@ class CHBSBooking
                         //$taxValue=$booking['meta']['price_distance_tax_rate_value'];
 
                         $fixed_4_delivery = $booking['meta']['price_first_4_delivery_value'];
-                        $additionalPrice  = $booking['meta']['price_extra_km_value'];         
-                        $duration = ($booking['meta']['duration']/60);
+                        $additionalPrice  = $booking['meta']['price_extra_km_value'];    
+                        if(isset ($booking['meta']['extra_time_value'])) {
+                            $duration = $booking['meta']['extra_time_value'] + $booking['meta']['duration'];
+                        } else {
+                            $duration = $booking['meta']['duration'];
+                        }
+                        $duration = ($duration/60);
                         $distance = $booking['meta']['distance'];
 
                         if($distance <= 40) {
@@ -1243,55 +1257,57 @@ class CHBSBooking
         {
             if($booking['meta']['extra_time_enable']==1)
             {
-                if(($booking['meta']['extra_time_value']>0) && ($booking['meta']['price_extra_time_value']>0))
-                {
-                    $priceNet=$booking['meta']['price_extra_time_value'];
-                    $valueNet=$priceNet*($booking['meta']['extra_time_value']/60);
+              
+                // if(($booking['meta']['extra_time_value']>0) && ($booking['meta']['price_extra_time_value']>0))
+                // {
+                //     $priceNet=$booking['meta']['price_extra_time_value'];
+                //     $valueNet=$priceNet*($booking['meta']['extra_time_value']/60);
 
-                    $billing['detail'][]=array
-                    (
-                        'type'                                                  =>  'extra_time',
-                        'name'                                                  =>  __('Extra time','chauffeur-booking-system'),
-                        'unit'                                                  =>  __('Hours','chauffeur-booking-system'),  
-                        'quantity'                                              =>  $Date->formatMinuteToTime($booking['meta']['extra_time_value']),
-                        'duration'                                              =>  $booking['meta']['price_extra_time_value'],
-                        'distance'                                              =>  0,
-                        'price_net'                                             =>  $priceNet,
-                        'value_net'                                             =>  $valueNet,                   
-                        'tax_value'                                             =>  $booking['meta']['price_extra_time_tax_rate_value'],
-                        'value_gross'                                           =>  CHBSPrice::calculateGross($valueNet,0,$booking['meta']['price_extra_time_tax_rate_value'])
-                    );
-                }
+                //     $billing['detail'][]=array
+                //     (
+                //         'type'                                                  =>  'extra_time',
+                //         'name'                                                  =>  __('Extra time','chauffeur-booking-system'),
+                //         'unit'                                                  =>  __('Hours','chauffeur-booking-system'),  
+                //         'quantity'                                              =>  $Date->formatMinuteToTime($booking['meta']['extra_time_value']),
+                //         'duration'                                              =>  $booking['meta']['price_extra_time_value'],
+                //         'distance'                                              =>  0,
+                //         'price_net'                                             =>  $priceNet,
+                //         'value_net'                                             =>  $valueNet,                   
+                //         'tax_value'                                             =>  $booking['meta']['price_extra_time_tax_rate_value'],
+                //         'value_gross'                                           =>  CHBSPrice::calculateGross($valueNet,0,$booking['meta']['price_extra_time_tax_rate_value'])
+                //     );
+                // }
             }
         }
         
         /***/
         
-        if(is_array($booking['meta']['booking_extra']))
-        {
-            foreach($booking['meta']['booking_extra'] as $value)
-            {
-                $priceNet=$value['price'];
-                $valueNet=$priceNet*$value['quantity'];
+        // if(is_array($booking['meta']['booking_extra']))
+        // {
+            
+        //     foreach($booking['meta']['booking_extra'] as $value)
+        //     {
+        //         $priceNet=$value['price'];
+        //         $valueNet=$priceNet*$value['quantity'];
                 
-                if($priceNet>0)
-                {
-                    $billing['detail'][]=array
-                    (
-                        'type'                                                      =>  'booking_extra',
-                        'name'                                                      =>  $value['name'],
-                        'unit'                                                      =>  __('Item','chauffeur-booking-system'),    
-                        'quantity'                                                  =>  $value['quantity'],
-                        'duration'                                                  =>  0,
-                        'distance'                                                  =>  0,
-                        'price_net'                                                 =>  $priceNet,
-                        'value_net'                                                 =>  $valueNet,                   
-                        'tax_value'                                                 =>  $value['tax_rate_value'],
-                        'value_gross'                                               =>  CHBSPrice::calculateGross($valueNet,0,$value['tax_rate_value'])
-                    );
-                }
-            }
-        }
+        //         if($priceNet>0)
+        //         {
+        //             $billing['detail'][]=array
+        //             (
+        //                 'type'                                                      =>  'booking_extra',
+        //                 'name'                                                      =>  $value['name'],
+        //                 'unit'                                                      =>  __('Item','chauffeur-booking-system'),    
+        //                 'quantity'                                                  =>  $value['quantity'],
+        //                 'duration'                                                  =>  0,
+        //                 'distance'                                                  =>  0,
+        //                 'price_net'                                                 =>  $priceNet,
+        //                 'value_net'                                                 =>  $valueNet,                   
+        //                 'tax_value'                                                 =>  $value['tax_rate_value'],
+        //                 'value_gross'                                               =>  CHBSPrice::calculateGross($valueNet,0,$value['tax_rate_value'])
+        //             );
+        //         }
+        //     }
+        // }
         
         /***/
         
