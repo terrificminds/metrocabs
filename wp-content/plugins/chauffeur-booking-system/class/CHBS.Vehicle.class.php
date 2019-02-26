@@ -498,7 +498,7 @@ class CHBSVehicle
         $PriceRule=new CHBSPriceRule();
         
         $taxRate=$TaxRate->getDictionary();
-        
+
         /***/
         
         $passengerSum=0;
@@ -676,10 +676,11 @@ class CHBSVehicle
                                         
                         //If the first 40KM/4Hrs price  
                         if(isset($priceBase['price_first_4_delivery_value']) && ($priceBase['price_first_4_delivery_value'] > 0)) {
+                           
                             $price_for_km = 0;
                             $fixed_4_delivery = $priceBase['price_first_4_delivery_value'];
-                            $additionalPrice  = $priceBase['price_extra_km_value'];         
-
+                            $additionalPrice  = $priceBase['price_extra_km_value'];
+                           
                             if($distance <= 40) {
                                 if($fixed_4_delivery > 0) {
                                     $price_for_km     = $fixed_4_delivery;                  
@@ -707,7 +708,6 @@ class CHBSVehicle
                             } else {
                                 $priceSumNetValue = $price_for_hr;
                             }
-
 
                         } else {
                             $priceSumNetValue=$priceBase['price_distance_value']*$distance;

@@ -75,8 +75,8 @@
                             <label><?php esc_html_e('Waypoint','chauffeur-booking-system'); ?></label>
                             <input type="text" autocomplete="off" name="<?php CHBSHelper::getFormName('waypoint_location_service_type_1[]'); ?>"/>
                             <input type="hidden" name="<?php CHBSHelper::getFormName('waypoint_location_coordinate_service_type_1[]'); ?>"/>
-                            <!--span class="chbs-location-add chbs-meta-icon-plus"></span>
-                            <span class="chbs-location-remove chbs-meta-icon-minus"></span-->
+                            <!-- <span class="chbs-location-add chbs-meta-icon-plus"></span>
+                            <span class="chbs-location-remove chbs-meta-icon-minus"></span> -->
                         </div>  
 <?php
             }
@@ -89,7 +89,7 @@
             if($this->data['widget_mode']!=1)
             {
 ?>
-                            <!--span class="chbs-location-add chbs-meta-icon-plus"></span-->
+                            <!-- <span class="chbs-location-add chbs-meta-icon-plus"></span> -->
 <?php
             }
 ?>
@@ -101,10 +101,10 @@
                             <input type="hidden" name="<?php CHBSHelper::getFormName('dropoff_location_coordinate_service_type_1'); ?>" value="<?php echo esc_attr(CHBSRequestData::getCoordinateFromWidget(1,'dropoff_location')); ?>"/>
                         </div>
 <?php
-       /*     if(in_array(1,$this->data['meta']['transfer_type_enable']))
+            if(in_array(1,$this->data['meta']['transfer_type_enable']))
             {
 ?>
-                        <div class="chbs-form-field">
+                        <div class="chbs-form-field" style="display:none;">
                             <label><?php esc_html_e('Transfer type','chauffeur-booking-system'); ?></label>
                             <select name="<?php CHBSHelper::getFormName('transfer_type_service_type_1'); ?>">
 <?php
@@ -136,7 +136,7 @@
 
                         </div>                                  
 <?php
-            } */
+            }
             
             if((CHBSBookingHelper::isPassengerEnable($this->data['meta'],1,'adult')) || (CHBSBookingHelper::isPassengerEnable($this->data['meta'],1,'children')))
             {
@@ -353,7 +353,7 @@
             {
 ?>
       
-                        <div class="chbs-form-field">
+                        <div class="chbs-form-field" style="display:none;">
                             <label><?php esc_html_e('Transfer type','chauffeur-booking-system'); ?></label>
                             <select name="<?php CHBSHelper::getFormName('transfer_type_service_type_3'); ?>">
 <?php

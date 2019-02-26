@@ -292,13 +292,13 @@
                                         <td class="to-align-right"><div>-</div></td>
                                         <td class="to-align-right">
                                             <div>
-                                                <?php echo esc_html($this->data['billing']['summary']['value_net']); ?>
+                                               <strong> <?php echo esc_html($this->data['billing']['summary']['value_net']); ?> </strong>
                                             </div>
                                         </td>  
                                         <td class="to-align-right"><div>-</div></td>
                                         <td class="to-align-right">
                                             <div>
-                                                <?php echo esc_html($this->data['billing']['summary']['value_gross']); ?>
+                                            <strong> <?php echo esc_html($this->data['billing']['summary']['value_gross']); ?> </strong>
                                             </div>
                                         </td>      
                                     </tr> 
