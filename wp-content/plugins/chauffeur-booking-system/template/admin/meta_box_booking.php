@@ -111,6 +111,14 @@
                                 <?php echo esc_html($this->data['billing']['summary']['duration']);  ?>
                             </div>
                         </li> 
+
+                        <li>
+                            <h5><?php esc_html_e('Remarks','chauffeur-booking-system'); ?></h5>
+                            <span class="to-legend"><?php esc_html_e('Rental time of the vehicle in hours.','chauffeur-booking-system'); ?></span>
+                            <div class="to-field-enabled">
+                                <textarea name="remarks"></textarea>
+                            </div>
+                        </li>
                         
                         
 <?php

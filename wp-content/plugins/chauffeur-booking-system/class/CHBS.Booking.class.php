@@ -527,6 +527,7 @@ class CHBSBooking
     
 	function savePost($postId)
 	{		
+ 
         if(!$_POST) return(false);
         
         if(CHBSHelper::checkSavePost($postId,PLUGIN_CHBS_CONTEXT.'_meta_box_booking_noncename','savePost')===false) return(false);
@@ -539,8 +540,12 @@ class CHBSBooking
            CHBSPostMeta::updatePostMeta($postId,'booking_status_id',CHBSHelper::getPostValue('booking_status_id')); 
             
         $newPost=get_post($postId);
-		$newMeta=CHBSPostMeta::getPostMeta($postId);
-		
+        $newMeta=CHBSPostMeta::getPostMeta($postId);
+        
+        // if(isset($_POST['remarks'])){
+        //     $this->sendSMS($postId,$_POST['remarks']);
+        // }
+       		
 		if($oldMeta['booking_status_id']!=$newMeta['booking_status_id'])
         {
             $BookingStatus=new CHBSBookingStatus();
@@ -556,6 +561,25 @@ class CHBSBooking
 	}
 
     /**************************************************************************/
+
+    function sendSMS($postId,$remarks){
+        $newMeta=CHBSPostMeta::getPostMeta($postId);
+
+        $apiUrl = 'https://instantalerts.co/api/web/send?';
+        $apikey = '6ubqq88255zc9v0071n9856gxsl09p10i';
+        $sender = 'SEDEMO';
+        $to     = $newMeta['client_contact_detail_phone_number'];
+        
+        $url = $apiUrl.'apikey='.$apikey.'&sender='.$sender.'&to='.$to.'&message='.urlencode('Hi,'.$remarks);
+
+        $ch = curl_init(); 
+        curl_setopt($ch, CURLOPT_URL, $url); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); 
+        $head = curl_exec($ch); 
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE); 
+        curl_close($ch); 
+     
+    }
     
     function manageEditColumns($column)
     {
@@ -1361,6 +1385,7 @@ class CHBSBooking
     
     function sendEmail($bookingId,$emailAccountId,$template,$recipient,$subject)
     {
+     
         $Email=new CHBSEmail();
         $EmailAccount=new CHBSEmailAccount();
         

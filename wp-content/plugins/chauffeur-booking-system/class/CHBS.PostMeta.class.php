@@ -125,6 +125,7 @@ class CHBSPostMeta
 		$postId=(int)(is_object($post) ? $post->ID : $post);
 		
 		update_post_meta($postId,$name,$value);
+		update_post_meta($postId,'remarks',$post['remarksgit ']);
 	}
     
 	/**************************************************************************/
