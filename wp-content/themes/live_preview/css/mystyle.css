@@ -1,9 +1,45 @@
+  
+  
+  .chbs-main {
+    max-width: 1350px;
+    margin: 0px auto!important;
+    padding: 50px 25px;
+    background: white;
+  }
+
+  .chbs-booking-form-id-10007 .chbs-button.chbs-button-style-1:hover{
+    background: #FF700A!important;
+    font-weight: bold;
+    color: white!important;
+  }
+
+  .chbs-payment-header {
+    margin-top: 40px!important;
+    text-align: left!important;
+    font-weight: normal!important;
+    font-size: 25px!important;
+  }
+
+  .chbs-payment li a {
+    text-align: left!important;
+    padding-left: 50px!important;
+  }
+
+  .chbs-google-map-summary{
+    display: none!important;
+  }
+
+  .chbs-main .chbs-payment>li>a>span.chbs-meta-icon-tick {
+    left: 0!important;
+    top: 35%!important;
+  }
+  
   body {
   transition: all 0.5s ease;
   overflow-x: hidden;
-  background-color: #fefff6 !important;
   color: #333 !important;
   line-height: 1.6 !important;
+  background: white !important;
   letter-spacing: 0.3px; }
   #myHeader {
   overflow: hidden !important; }
@@ -14,7 +50,7 @@
   padding: 0 !important; }
   .header {
   width: 100% !important;
-  background: white !important; }
+   }
 
   .read_more .title {
   text-align: center;
