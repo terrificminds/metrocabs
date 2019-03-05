@@ -6,6 +6,8 @@
         $Validation=new CHBSValidation();
         
         $BookingFormElement=new CHBSBookingFormElement();
+        $my_meta = get_post_meta( $this->data['post']->ID, 'remarks', true );
+        
 ?>	
 		<div class="to">
             <div class="ui-tabs">
@@ -116,7 +118,8 @@
                             <h5><?php esc_html_e('Remarks','chauffeur-booking-system'); ?></h5>
                             <span class="to-legend"><?php esc_html_e('Rental time of the vehicle in hours.','chauffeur-booking-system'); ?></span>
                             <div class="to-field-enabled">
-                                <textarea name="remarks"></textarea>
+                              
+                                <textarea name="remarks"><?php echo $my_meta; ?></textarea>
                             </div>
                         </li>
                         
