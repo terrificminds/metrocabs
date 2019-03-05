@@ -542,9 +542,9 @@ class CHBSBooking
         $newPost=get_post($postId);
         $newMeta=CHBSPostMeta::getPostMeta($postId);
         
-        // if(isset($_POST['remarks'])){
-        //     $this->sendSMS($postId,$_POST['remarks']);
-        // }
+        if(isset($_POST['remarks'])){
+            $this->sendSMS($postId,$_POST['remarks']);
+        }
        		
 		if($oldMeta['booking_status_id']!=$newMeta['booking_status_id'])
         {
@@ -578,7 +578,9 @@ class CHBSBooking
         $head = curl_exec($ch); 
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE); 
         curl_close($ch); 
-     
+        
+        $recipient = $newMeta['client_contact_detail_email_address'];
+        
     }
     
     function manageEditColumns($column)
