@@ -7,6 +7,14 @@
     background: white;
   }
 
+  .chbs-main .chbs-tab.ui-tabs .ui-tabs-nav {
+    display: none!important;
+  } 
+
+  html .chbs-booking-form-id-10007 .chbs-tab.ui-tabs .ui-tabs-panel {
+    border: none
+  }
+
   .chbs-booking-form-id-10007 .chbs-button.chbs-button-style-1:hover{
     background: #FF700A!important;
     font-weight: bold;

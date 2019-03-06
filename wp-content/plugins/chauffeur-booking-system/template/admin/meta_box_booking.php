@@ -106,13 +106,13 @@
 <?php
         }
 ?>
-                        <li>
-                            <h5><?php esc_html_e('Duration','chauffeur-booking-system'); ?></h5>
-                            <span class="to-legend"><?php esc_html_e('Rental time of the vehicle in hours.','chauffeur-booking-system'); ?></span>
+                        <!-- <li>
+                            <h5><?php //esc_html_e('Duration','chauffeur-booking-system'); ?></h5>
+                            <span class="to-legend"><?php //esc_html_e('Rental time of the vehicle in hours.','chauffeur-booking-system'); ?></span>
                             <div class="to-field-disabled">
-                                <?php echo esc_html($this->data['billing']['summary']['duration']);  ?>
+                                <?php //echo esc_html($this->data['billing']['summary']['duration']);  ?>
                             </div>
-                        </li> 
+                        </li>  -->
 
                         <li>
                             <h5><?php esc_html_e('Remarks','chauffeur-booking-system'); ?></h5>
