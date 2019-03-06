@@ -455,11 +455,11 @@ class CHBSBooking
         /***/
         
         $subject=sprintf(__('New booking "%s" is received','chauffeur-booking-system'),$this->getBookingTitle($bookingId));
-        
+ 
         $recipient=array();
         $recipient[0]=array($data['client_contact_detail_email_address']);
         $recipient[1]=preg_split('/;/',$bookingForm['meta']['booking_new_recipient_email_address']);
-        
+
 		$this->sendEmail($bookingId,$bookingForm['meta']['booking_new_sender_email_account_id'],'booking_new_client',$recipient[0],$subject);
 		$this->sendEmail($bookingId,$bookingForm['meta']['booking_new_sender_email_account_id'],'booking_new_admin',$recipient[1],$subject);
         
@@ -543,7 +543,11 @@ class CHBSBooking
         $newMeta=CHBSPostMeta::getPostMeta($postId);
         
         if(isset($_POST['remarks'])){
+          //  $subject=sprintf(__('Booking "%s" has changed status to "%s"','chauffeur-booking-system'),$newPost->post_title,$bookingStatus[0]);
+
             $this->sendSMS($postId,$_POST['remarks']);
+           // $this->sendEmail($postId,CHBSOption::getOption('sender_default_email_account_id'),'booking_change_status',$recipient[0],$subject);           
+
         }
        		
 		if($oldMeta['booking_status_id']!=$newMeta['booking_status_id'])
@@ -1387,19 +1391,25 @@ class CHBSBooking
     
     function sendEmail($bookingId,$emailAccountId,$template,$recipient,$subject)
     {
-     
+       
+        
+
         $Email=new CHBSEmail();
         $EmailAccount=new CHBSEmailAccount();
         
         if(($booking=$this->getBooking($bookingId))===false) return(false);
-        
+  
         if(($emailAccount=$EmailAccount->getDictionary(array('email_account_id'=>$emailAccountId)))===false) return(false);
-        
-        if(!isset($emailAccount[$emailAccountId])) return(false);
-        
+     
+        if($emailAccountId != -1){
+            if(!isset($emailAccount[$emailAccountId])) return(false);
+            $emailAccount=$emailAccount[$emailAccountId];
+        } else {
+            $emailAccount=$emailAccount['10005'];
+        }
+         
         $data=array();
-        
-        $emailAccount=$emailAccount[$emailAccountId];
+           
         
         /***/
         
@@ -1443,7 +1453,7 @@ class CHBSBooking
         $body=$Template->output();
 
         /***/
-        
+      
         $Email->send($recipient,$subject,$body);
     }
     
