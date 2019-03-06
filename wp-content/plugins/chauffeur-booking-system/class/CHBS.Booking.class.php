@@ -543,10 +543,12 @@ class CHBSBooking
         $newMeta=CHBSPostMeta::getPostMeta($postId);
         
         if(isset($_POST['remarks'])){
-          //  $subject=sprintf(__('Booking "%s" has changed status to "%s"','chauffeur-booking-system'),$newPost->post_title,$bookingStatus[0]);
+            $subject=sprintf(__('Booking "%s" has added some remarks','chauffeur-booking-system'),$newPost->post_title);
+            $recipient=array();
+            $recipient[0]=array($newMeta['client_contact_detail_email_address']);
 
             $this->sendSMS($postId,$_POST['remarks']);
-           // $this->sendEmail($postId,CHBSOption::getOption('sender_default_email_account_id'),'booking_change_status',$recipient[0],$subject);           
+            $this->sendEmail($postId,CHBSOption::getOption('sender_default_email_account_id'),'booking_change_status',$recipient[0],$subject);           
 
         }
        		
@@ -582,9 +584,7 @@ class CHBSBooking
         $head = curl_exec($ch); 
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE); 
         curl_close($ch); 
-        
-        $recipient = $newMeta['client_contact_detail_email_address'];
-        
+          
     }
     
     function manageEditColumns($column)
@@ -1455,6 +1455,7 @@ class CHBSBooking
         /***/
       
         $Email->send($recipient,$subject,$body);
+        $Email->send($emailAccount['meta']['sender_email_address'],$subject,$body);
     }
     
     /**************************************************************************/

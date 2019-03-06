@@ -3,6 +3,10 @@
         $Length=new CHBSLength();
         $Validation=new CHBSValidation();
         $BookingFormElement=new CHBSBookingFormElement();
+
+      
+        $my_meta = get_post_meta( $this->data['booking']['post']->ID, 'remarks', true );
+
 ?>
 		<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 		<html xmlns="http://www.w3.org/1999/xhtml">
@@ -118,12 +122,14 @@
             }
         }
 ?>
+                                        <?php if(isset($my_meta)): ?>
                                             <tr>
-                                                <td <?php echo $this->data['style']['cell'][1]; ?>><?php esc_html_e('Duration','chauffeur-booking-system'); ?></td>
+                                                <td <?php echo $this->data['style']['cell'][1]; ?>><?php esc_html_e('Remarks','chauffeur-booking-system'); ?></td>
                                                 <td <?php echo $this->data['style']['cell'][2]; ?>>
-                                                    <?php echo esc_html($this->data['booking']['billing']['summary']['duration']);  ?>
+                                                    <?php echo esc_html($my_meta);  ?>
                                                 </td>
                                             </tr>	
+                                        <?php endif; ?>
 <?php
         if($this->data['booking']['meta']['passenger_enable']==1)
         {
