@@ -1763,7 +1763,7 @@ class CHBSBookingForm
                         }
                     }
                 }
-                
+        
                 if(!$error)
                 {
                     if($Validation->isEmpty($data['client_contact_detail_first_name']))
@@ -1772,7 +1772,12 @@ class CHBSBookingForm
                         $this->setErrorLocal($response,CHBSHelper::getFormName('client_contact_detail_last_name',false),__('Enter your last name','chauffeur-booking-system'));
                     if(!$Validation->isEmailAddress($data['client_contact_detail_email_address']))
                         $this->setErrorLocal($response,CHBSHelper::getFormName('client_contact_detail_email_address',false),__('Enter valid e-mail address','chauffeur-booking-system'));
-
+                    
+                    if(!$Validation->isNumber($data['client_contact_detail_phone_number'],10,12))
+                        $this->setErrorLocal($response,CHBSHelper::getFormName('client_contact_detail_phone_number',false),__('Enter valid phone number','chauffeur-booking-system'));
+                    if($data['payment_id'] == 0)
+                        $this->setErrorGlobal($response,__('Please select the payment method','chauffeur-booking-system'));
+                 
                     if((int)$data['client_billing_detail_enable']===1)
                     {
                          if($Validation->isEmpty($data['client_billing_detail_street_name']))
