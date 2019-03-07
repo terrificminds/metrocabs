@@ -11,7 +11,24 @@ class CHBSValidation
 	{ 
 		$this->Notice=$Notice;
 	}
+	/**************************************************************************/
 
+	public function isPhone($value)
+	{
+		if(preg_match("/^[0-9]{3}[0-9]{4}[0-9]{4}$/", $value)) {
+			return (true);
+		}
+
+		return(false);
+	}
+	/**************************************************************************/
+
+	public function isZipcode($value)
+	{
+		if(!preg_match('/^(-)?[0-9]{1,}$/',$value,$result)) return(false);
+		
+		return(true);
+	}
 	/**************************************************************************/
 
 	public function isNumber($value,$minValue,$maxValue,$empty=false)

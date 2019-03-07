@@ -1773,7 +1773,7 @@ class CHBSBookingForm
                     if(!$Validation->isEmailAddress($data['client_contact_detail_email_address']))
                         $this->setErrorLocal($response,CHBSHelper::getFormName('client_contact_detail_email_address',false),__('Enter valid e-mail address','chauffeur-booking-system'));
                     
-                    if(!$Validation->isNumber($data['client_contact_detail_phone_number'],10,12))
+                    if(!$Validation->isPhone($data['client_contact_detail_phone_number']))
                         $this->setErrorLocal($response,CHBSHelper::getFormName('client_contact_detail_phone_number',false),__('Enter valid phone number','chauffeur-booking-system'));
                     if($data['payment_id'] == 0)
                         $this->setErrorGlobal($response,__('Please select the payment method','chauffeur-booking-system'));
@@ -1786,8 +1786,8 @@ class CHBSBookingForm
                             $this->setErrorLocal($response,CHBSHelper::getFormName('client_billing_detail_city',false),__('Enter city name','chauffeur-booking-system'));                 
                         if($Validation->isEmpty($data['client_billing_detail_state']))
                             $this->setErrorLocal($response,CHBSHelper::getFormName('client_billing_detail_state',false),__('Enter state name','chauffeur-booking-system'));                
-                        if($Validation->isEmpty($data['client_billing_detail_postal_code']))
-                            $this->setErrorLocal($response,CHBSHelper::getFormName('client_billing_detail_postal_code',false),__('Enter postal code','chauffeur-booking-system'));                  
+                        if($Validation->isEmpty($data['client_billing_detail_postal_code']) || (!is_numeric($data['client_billing_detail_postal_code'])))
+                            $this->setErrorLocal($response,CHBSHelper::getFormName('client_billing_detail_postal_code',false),__('Enter valid postal code','chauffeur-booking-system'));                  
                         if(!$Country->isCountry($data['client_billing_detail_country_code']))
                             $this->setErrorLocal($response,CHBSHelper::getFormName('client_billing_detail_country_code',false),__('Enter country name','chauffeur-booking-system')); 
                     }
