@@ -15,7 +15,7 @@ class CHBSValidation
 
 	public function isPhone($value)
 	{
-		if(preg_match("/^[0-9]{3}[0-9]{4}[0-9]{4}$/", $value)) {
+		if(preg_match("/^[0-9]{10,13}/", $value)) {
 			return (true);
 		}
 
