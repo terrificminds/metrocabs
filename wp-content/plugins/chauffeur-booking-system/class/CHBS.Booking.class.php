@@ -460,6 +460,7 @@ class CHBSBooking
         $recipient[0]=array($data['client_contact_detail_email_address']);
         $recipient[1]=preg_split('/;/',$bookingForm['meta']['booking_new_recipient_email_address']);
 
+        
 		$this->sendEmail($bookingId,$bookingForm['meta']['booking_new_sender_email_account_id'],'booking_new_client',$recipient[0],$subject);
 		$this->sendEmail($bookingId,$bookingForm['meta']['booking_new_sender_email_account_id'],'booking_new_admin',$recipient[1],$subject);
         
@@ -1455,7 +1456,7 @@ class CHBSBooking
         /***/
       
         $Email->send($recipient,$subject,$body);
-        $Email->send($emailAccount['meta']['sender_email_address'],$subject,$body);
+    //    $Email->send($emailAccount['meta']['sender_email_address'],$subject,$body);
     }
     
     /**************************************************************************/
