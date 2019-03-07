@@ -1455,7 +1455,7 @@ class CHBSBooking
         /***/
       
         $Email->send($recipient,$subject,$body);
-        $Email->send($emailAccount['meta']['sender_email_address'],$subject,$body);
+    //    $Email->send($emailAccount['meta']['sender_email_address'],$subject,$body);
     }
     
     /**************************************************************************/
