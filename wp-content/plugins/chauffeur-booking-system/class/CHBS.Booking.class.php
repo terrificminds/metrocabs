@@ -572,21 +572,21 @@ class CHBSBooking
     function sendSMS($postId,$remarks){
         $newMeta=CHBSPostMeta::getPostMeta($postId);
 
-        $apiUrl = 'https://instantalerts.co/api/web/send?';
-        $apikey = '6ubqq88255zc9v0071n9856gxsl09p10i';
-        $sender = 'SEDEMO';
+		$apiUrl = 'https://instantalerts.co/api/web/send?';
+        $apikey = '5646iwr07347808v9hz5w0ad11z3l90q066';
+        $sender = 'MTROCB';
         $to     = $newMeta['client_contact_detail_phone_number'];
-        
-        $url = $apiUrl.'apikey='.$apikey.'&sender='.$sender.'&to='.$to.'&message='.urlencode('Hi,'.$remarks);
 
-        $ch = curl_init(); 
-        curl_setopt($ch, CURLOPT_URL, $url); 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); 
-        $head = curl_exec($ch); 
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE); 
-        curl_close($ch); 
-          
+        $url = $apiUrl.'apikey='.$apikey.'&sender='.$sender.'&to='.$to.'&message='.urlencode($remarks);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $head = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
     }
+
     
     function manageEditColumns($column)
     {

@@ -50,7 +50,9 @@
   background: white !important;
   letter-spacing: 0.3px; }
   #myHeader {
-  overflow: hidden !important; }
+    overflow: hidden !important;
+    z-index: 99999 !important 
+  }
   @media all and (max-width: 767px) {
   .navbar-header {
   padding-bottom: 20px !important; } }
