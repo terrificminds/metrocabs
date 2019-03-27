@@ -1,5 +1,5 @@
-  
-  
+
+
   .chbs-main {
     max-width: 1350px;
     margin: 0px auto!important;
@@ -9,7 +9,7 @@
 
   .chbs-main .chbs-tab.ui-tabs .ui-tabs-nav {
     display: none!important;
-  } 
+  }
 
   html .chbs-booking-form-id-10007 .chbs-tab.ui-tabs .ui-tabs-panel {
     border: none
@@ -41,7 +41,7 @@
     left: 0!important;
     top: 35%!important;
   }
-  
+
   body {
   transition: all 0.5s ease;
   overflow-x: hidden;
@@ -51,7 +51,7 @@
   letter-spacing: 0.3px; }
   #myHeader {
     overflow: hidden !important;
-    z-index: 99999 !important 
+    z-index: 99999 !important
   }
   @media all and (max-width: 767px) {
   .navbar-header {
@@ -1010,7 +1010,8 @@
   padding-right: 20px; }
   @media all and (max-width: 767px) {
   .footer-m .tm-logo {
-  width: 278px;
+  width: 270px;
+  padding-right: 0;
   margin: 0 auto; } }
   .footer-m .tm-logo h6 {
   float: right; }
@@ -1189,3 +1190,38 @@
     margin-top: 50px;
   }
   /*# sourceMappingURL=mystyle.css.map */
+  .banner-slider .slick-slider .slick-list .slick-track .slick-slide {
+    margin: 0;
+  }
+  .banner-slider .slick-slider button.slick-arrow {
+    display: none !important;
+  }
+
+@media all and (max-width: 678px) {
+  .chbs-main .chbs-main-content>div>div:last-child {
+    border: solid;
+    display: flex;
+    flex-direction: column;
+    margin: 50px 0 !important;
+  }
+  .chbs-main .chbs-main-content>div>div:last-child .chbs-button  {
+    width: 70%;
+    margin: 0 auto 3%;
+    text-align: center;
+  }
+}
+@media all and (max-width: 478px) {
+  .chbs-main .chbs-main-content>div>div:last-child .chbs-button  {
+    width: 100%;
+  }
+}
+@media all and (max-width:1024px) {
+  .chbs-main-content-step-4 .chbs-summary-header {
+    display: flex;
+    flex-direction: column;
+  }
+  .chbs-main-content-step-4 .chbs-summary-header a {
+    width: 60px;
+    text-align: center;
+  } 
+}
