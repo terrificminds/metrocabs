@@ -80,7 +80,7 @@
                         </button>
 
                         <div class="navbar-brand">
-                        <a href="">  <img src="<?php echo get_template_directory_uri(); ?>/images/metrocabs-logo.png"/></a>
+                        <a href="/">  <img src="<?php echo get_template_directory_uri(); ?>/images/metrocabs-logo.png"/></a>
                         </div>
 
                     </div>

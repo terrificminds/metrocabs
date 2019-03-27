@@ -1,5 +1,5 @@
-  
-  
+
+
   .chbs-main {
     max-width: 1350px;
     margin: 0px auto!important;
@@ -9,7 +9,7 @@
 
   .chbs-main .chbs-tab.ui-tabs .ui-tabs-nav {
     display: none!important;
-  } 
+  }
 
   html .chbs-booking-form-id-10007 .chbs-tab.ui-tabs .ui-tabs-panel {
     border: none
@@ -41,7 +41,7 @@
     left: 0!important;
     top: 35%!important;
   }
-  
+
   body {
   transition: all 0.5s ease;
   overflow-x: hidden;
@@ -51,7 +51,7 @@
   letter-spacing: 0.3px; }
   #myHeader {
     overflow: hidden !important;
-    z-index: 99999 !important 
+    z-index: 99999 !important
   }
   @media all and (max-width: 767px) {
   .navbar-header {
@@ -1010,7 +1010,8 @@
   padding-right: 20px; }
   @media all and (max-width: 767px) {
   .footer-m .tm-logo {
-  width: 278px;
+  width: 270px;
+  padding-right: 0;
   margin: 0 auto; } }
   .footer-m .tm-logo h6 {
   float: right; }
@@ -1189,3 +1190,9 @@
     margin-top: 50px;
   }
   /*# sourceMappingURL=mystyle.css.map */
+  .banner-slider .slick-slider .slick-list .slick-track .slick-slide {
+    margin: 0;
+  }
+  .banner-slider .slick-slider button.slick-arrow {
+    display: none !important;
+  }
