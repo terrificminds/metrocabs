@@ -1196,3 +1196,32 @@
   .banner-slider .slick-slider button.slick-arrow {
     display: none !important;
   }
+
+@media all and (max-width: 678px) {
+  .chbs-main .chbs-main-content>div>div:last-child {
+    border: solid;
+    display: flex;
+    flex-direction: column;
+    margin: 50px 0 !important;
+  }
+  .chbs-main .chbs-main-content>div>div:last-child .chbs-button  {
+    width: 70%;
+    margin: 0 auto 3%;
+    text-align: center;
+  }
+}
+@media all and (max-width: 478px) {
+  .chbs-main .chbs-main-content>div>div:last-child .chbs-button  {
+    width: 100%;
+  }
+}
+@media all and (max-width:1024px) {
+  .chbs-main-content-step-4 .chbs-summary-header {
+    display: flex;
+    flex-direction: column;
+  }
+  .chbs-main-content-step-4 .chbs-summary-header a {
+    width: 60px;
+    text-align: center;
+  } 
+}
