@@ -22,11 +22,21 @@ get_header();
 				));
 				while($carousel -> have_posts()): $carousel -> the_post(); ?>
 					<div>
+					<?php if(types_render_field("bookingbutton",array('row' => true)) == 'yes'){?>
 					    <a href="<?php echo(types_render_field("bannerurl",array('row' => true))); ?>">
-							<?php echo(types_render_field("bannerimage",array('row' => true))); ?>
-							
+					<?php } ?>
+							<?php echo(types_render_field("bannerimage",array('row' => true))); ?>	
+							<div class="banner-head">
+								<?php echo(types_render_field("bannerheading",array('row' => true))); ?>
+								<?php if(types_render_field("bookingbutton",array('row' => true)) == 'yes'){?>
+									<div class="bookbutton">
+										<span>BOOK NOW </span>
+									</div>
+								<?php } ?>
+							</div>
+						<?php if(types_render_field("bookingbutton",array('row' => true)) == 'yes'){?>					
 						</a>
-						
+						<?php } ?>
 					</div>
 				<?php endwhile; ?>
 		</section>
