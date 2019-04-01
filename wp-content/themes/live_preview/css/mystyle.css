@@ -1218,7 +1218,7 @@
   .chbs-main-content-step-4 .chbs-summary-header a {
     width: 60px;
     text-align: center;
-  } 
+  }
 }
 .navbar .navbar-nav li.booking a{
   border: solid #eaa62c;
@@ -1233,4 +1233,104 @@
   background: #eaa62c;
   color: white !important;
   transition: all ease 0.5s;
+}
+.banner-slider {
+  position: relative;
+}
+.banner-slider .slick-slider .slick-list .slick-slide .banner-head {
+  position: absolute;
+  top: 20%;
+  color: #fff;
+  letter-spacing: 3px;
+  line-height: 45px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  border-color: #eff0e8;
+  padding-bottom: 22px;
+  font-weight: bold;
+}
+@media all and (min-width: 2200px) {
+  .banner-slider .slick-slider .slick-list .slick-slide .banner-head {
+    margin-left: 3%;
+  }
+}
+@media all and (min-width: 1800px) {
+  .banner-slider .slick-slider .slick-list .slick-slide .banner-head {
+    margin-left: 2%;
+  }
+}
+@media all and (min-width: 1200px) {
+  .banner-slider .slick-slider .slick-list .slick-slide .banner-head {
+    margin-left: 100px;
+  }
+}
+@media all and (max-width: 1199px) {
+  .banner-slider .slick-slider .slick-list .slick-slide .banner-head {
+    font-size: 37px;
+    line-height: 35px;
+  }
+}
+@media all and (max-width: 991px) {
+  .banner-slider .slick-slider .slick-list .slick-slide .banner-head {
+    margin-left: 50px;
+    font-size: 30px;
+    top: 100px;
+  }
+}
+@media all and (max-width: 768px) {
+  .banner-slider .slick-slider .slick-list .slick-slide .banner-head {
+    font-size: 28px;
+    line-height: 30px;
+  }
+}
+@media all and (max-width: 599px) {
+  .banner-slider .slick-slider .slick-list .slick-slide .banner-head {
+    font-size: 25px;
+    line-height: 28px;
+  }
+}
+@media all and (max-width: 480px) {
+  .banner-slider .slick-slider .slick-list .slick-slide .banner-head {
+    margin-left: 30px;
+    top: 80px;
+  }
+}
+@media all and (max-width: 420px) {
+  .banner-slider .slick-slider .slick-list .slick-slide .banner-head {
+    font-size: 22px;
+    line-height: 25px;
+  }
+}
+@media all and (max-width: 380px) {
+  .banner-slider .slick-slider .slick-list .slick-slide .banner-head {
+    font-size: 18px;
+    line-height: 20px;
+  }
+}
+.banner-slider .slick-slider .slick-list .slick-slide .banner-head .bookbutton {
+  border: solid #eaa62c;
+  background-color: #eaa62c;
+  border-radius: 50px;
+  width: 180px;
+  font-size: 20px;
+  text-align: center;
+  margin-top: 15px;
+}
+@media all and (max-width: 991px) {
+  .banner-slider .slick-slider .slick-list .slick-slide .banner-head .bookbutton {
+    font-size: 18px;
+    width: 160px;
+  }
+}
+@media all and (max-width: 768px) {
+  .banner-slider .slick-slider .slick-list .slick-slide .banner-head .bookbutton {
+    font-size: 15px;
+    width: 140px;
+  }
+}
+.banner-slider .slick-slider .slick-list .slick-slide a
+.banner-slider .slick-slider .slick-list .slick-slide a:hover
+.banner-slider .slick-slider .slick-list .slick-slide a:hover .banner-head {
+  color: #000 !important;
 }
