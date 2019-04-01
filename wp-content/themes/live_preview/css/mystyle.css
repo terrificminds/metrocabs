@@ -1194,7 +1194,6 @@
 
 @media all and (max-width: 678px) {
   .chbs-main .chbs-main-content>div>div:last-child {
-    border: solid;
     display: flex;
     flex-direction: column;
     margin: 50px 0 !important;
@@ -1333,4 +1332,34 @@
 .banner-slider .slick-slider .slick-list .slick-slide a:hover
 .banner-slider .slick-slider .slick-list .slick-slide a:hover .banner-head {
   color: #000 !important;
+}
+body:not(.home) .navbar .container-fluid .m-container .navbar-collapse #menu-top-menu,
+body:not(.home) .navbar .container-fluid .m-container .navbar-header .navbar-collapse {
+  display: none;
+}
+body:not(.home) footer .m-container #menu-footer-menu {
+  display: none;
+}
+@media all and (min-width: 478px) {
+  body:not(.home) footer .m-container {
+    display: flex;
+  }
+  body:not(.home) footer .m-container a {
+    float: left;
+    flex-basis: 15%;
+  }
+  body:not(.home) footer .m-container .tm-logo {
+    flex-basis: 85%;
+    padding-right: 0;
+  }
+  body:not(.home) footer .m-container .tm-logo a {
+    float: right;
+  }
+}
+@media all and (max-width: 767px) and (min-width: 481px) {
+  body #myHeader,
+  body #myHeader .container-fluid  {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
