@@ -1080,7 +1080,7 @@ class CHBSBookingForm
                 'navigation'                                                    =>  array
                 (
                     'number'                                                    =>  __('1','chauffeur-booking-system'),
-                    'label'                                                     =>  __('Enter Ride Details','chauffeur-booking-system'),
+                    'label'                                                     =>  __('Enter ','chauffeur-booking-system'),
                 ),
                 'button'                                                        =>  array
                 (
@@ -2860,7 +2860,7 @@ class CHBSBookingForm
                 if($thumbnail!==false)
                     $thumbnailHtml='<div><img src="'.esc_url($thumbnail).'" alt=""/></div>';
 
-                $response[2]=$thumbnailHtml.$BookingFormSummary->create(__('Vehicle info','chauffeur-booking-system'),2).$couponHtml.$priceHtml;
+                $response[2]=$thumbnailHtml.$BookingFormSummary->create(__('Vehicle Info','chauffeur-booking-system'),2).$couponHtml.$priceHtml;
 
             break;
         }
