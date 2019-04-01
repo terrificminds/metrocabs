@@ -2810,7 +2810,7 @@ class CHBSBookingForm
 
                 $googleMapHtml='<div class="chbs-google-map-summary"></div>';
 
-                $response[1]=$googleMapHtml.$BookingFormSummary->create(__('Ride details','chauffeur-booking-system'),1);
+                $response[1]=$googleMapHtml.$BookingFormSummary->create(__('Ride Details','chauffeur-booking-system'),1);
 
                 /***/
 

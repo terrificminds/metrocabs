@@ -214,7 +214,7 @@
             if($this->data['widget_mode']!=1)
             {
 ?>                        
-                        <label class="chbs-form-label-group"><?php esc_html_e('Ride details','chauffeur-booking-system'); ?></label>
+                        <label class="chbs-form-label-group"><?php esc_html_e('Ride Details','chauffeur-booking-system'); ?></label>
 <?php
             }
 ?>
@@ -316,7 +316,7 @@
             if($this->data['widget_mode']!=1)
             {
 ?>                        
-                        <label class="chbs-form-label-group"><?php esc_html_e('Ride details','chauffeur-booking-system'); ?></label>
+                        <label class="chbs-form-label-group"><?php esc_html_e('Ride Details','chauffeur-booking-system'); ?></label>
 <?php
             }
 ?>
