@@ -7,6 +7,15 @@
     background: white;
   }
 
+  #chbs-preloader { 
+    opacity :.8!important;
+    cursor:initial!important;
+  }
+
+  #contact-us h1 {
+    text-transform: capitalize;
+  }
+
   .chbs-main .chbs-tab.ui-tabs .ui-tabs-nav {
     display: none!important;
   }
