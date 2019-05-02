@@ -514,7 +514,7 @@
   overflow: inherit; } }
   @media all and (max-width: 902px) {
   .how_it_works {
-  padding-top: 90px; } }
+  padding-top: 1px; } }
   .how_it_works .how_it_back {
   position: absolute;
   background-color: #f9faf8;
@@ -830,7 +830,7 @@
   margin-top: 0px; } }
   @media all and (max-width: 767px) {
   .why-us {
-  padding-bottom: 60px; } }
+  padding-bottom: 0px; } }
   .why-us .why-us-head {
   letter-spacing: 3px;
   line-height: 40px;
